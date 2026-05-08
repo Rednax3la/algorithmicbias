@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CreditLens Kenya — Know Your Credit Score & Understand the Bias</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="nav">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__logo">
+      <span class="nav__logo-icon">📊</span>
+      CreditLens Kenya
+    </a>
+    <div class="nav__links">
+      <a href="research.html" class="nav__link">Research Dashboard</a>
+      <a href="auth.html" class="btn btn--outline btn--sm">Sign In</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container">
+    <div class="hero__content">
+      <p class="hero__eyebrow">JKUAT Research Project · Digital Credit Fairness</p>
+      <h1 class="hero__title">
+        Know where you stand.<br />
+        <span>Understand why.</span>
+      </h1>
+      <p class="hero__subtitle">
+        Digital lenders in Kenya use algorithms that may disadvantage you based on
+        your location, the phone you use, or your gender — not your actual ability to repay.
+        This tool gives you your personalized credit score and flags which penalties are
+        <strong>algorithmic bias</strong>, not legitimate risk.
+      </p>
+      <div class="hero__cta">
+        <a href="auth.html" class="btn btn--hero">Check your credit health — it's free</a>
+        <a href="research.html" class="btn btn--hero-outline">View Research Dashboard</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- How it works -->
+<section class="steps">
+  <div class="container">
+    <div class="text-center">
+      <p class="section-label">How It Works</p>
+      <h2 class="section-title">Three steps to your credit health report</h2>
+    </div>
+    <div class="steps__grid">
+      <div class="step card">
+        <div class="step__number">1</div>
+        <h3 class="step__title">Create a free account</h3>
+        <p class="step__desc">Sign up with your email. Your data is secured with Supabase and never shared with lenders.</p>
+      </div>
+      <div class="step card">
+        <div class="step__number">2</div>
+        <h3 class="step__title">Enter your financial profile</h3>
+        <p class="step__desc">Provide your income, M-Pesa activity, device type, and repayment history in under 3 minutes.</p>
+      </div>
+      <div class="step card">
+        <div class="step__number">3</div>
+        <h3 class="step__title">Get your personalized report</h3>
+        <p class="step__desc">See your credit score, approval likelihood, what's helping vs hurting — and what's unfair bias.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Why it matters -->
+<section class="why-matters">
+  <div class="container">
+    <div class="why-matters__grid">
+      <div>
+        <p class="section-label">Why It Matters</p>
+        <h2 class="section-title">The algorithm may be working against you</h2>
+        <p style="color: var(--text-muted); line-height: 1.8; margin-bottom: 1.25rem;">
+          Research from KIPPRA, the Kenya FinAccess Survey 2021/2024, and international
+          studies on African fintech have identified systematic biases in how digital
+          credit algorithms score borrowers.
+        </p>
+        <p style="color: var(--text-muted); line-height: 1.8; margin-bottom: 1.25rem;">
+          A rural borrower may be scored <strong>8 points lower</strong> simply for their
+          location. Women face a documented penalty despite equal repayment behaviour.
+          Your phone model is being used as an income proxy.
+        </p>
+        <p style="color: var(--text-muted); line-height: 1.8;">
+          This tool — built as part of a JKUAT Data Science thesis — surfaces these
+          penalties and shows you what your score <em>should</em> be without them.
+          Powered by guidelines from the CBK and the Kenya National Bureau of Statistics.
+        </p>
+      </div>
+      <div class="why-matters__stats">
+        <div class="why-matters__stat card">
+          <div class="why-matters__stat-number">8 pts</div>
+          <div class="why-matters__stat-label">Average penalty for rural borrowers<br /><em>Source: KIPPRA 2021</em></div>
+        </div>
+        <div class="why-matters__stat card">
+          <div class="why-matters__stat-number">37%</div>
+          <div class="why-matters__stat-label">Underfunding penalty for women in African fintech<br /><em>Source: Asante et al., 2025</em></div>
+        </div>
+        <div class="why-matters__stat card">
+          <div class="why-matters__stat-number">30%ile</div>
+          <div class="why-matters__stat-label">Credit score gap from device type alone<br /><em>Source: Berg et al., 2020</em></div>
+        </div>
+        <div class="why-matters__stat card">
+          <div class="why-matters__stat-number">2.4×</div>
+          <div class="why-matters__stat-label">Higher approval rate for urban vs rural borrowers<br /><em>Source: FinAccess 2021</em></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- What you get -->
+<section class="steps" style="background: #f9fafb;">
+  <div class="container">
+    <div class="text-center">
+      <p class="section-label">What You'll See</p>
+      <h2 class="section-title">Your complete credit health breakdown</h2>
+    </div>
+    <div class="steps__grid">
+      <div class="card" style="padding: 1.5rem;">
+        <div style="font-size: 2rem; margin-bottom: 0.75rem;">📈</div>
+        <h3 class="step__title">Your Credit Score (0–100)</h3>
+        <p class="step__desc">Modelled on how Kenyan digital lenders like M-Shwari, Tala, and Branch actually score borrowers.</p>
+      </div>
+      <div class="card" style="padding: 1.5rem;">
+        <div style="font-size: 2rem; margin-bottom: 0.75rem;">⚠️</div>
+        <h3 class="step__title">Bias Penalties Flagged</h3>
+        <p class="step__desc">We separate legitimate risk factors from bias-flagged penalties, with academic citations for each.</p>
+      </div>
+      <div class="card" style="padding: 1.5rem;">
+        <div style="font-size: 2rem; margin-bottom: 0.75rem;">🎯</div>
+        <h3 class="step__title">Score Without Bias</h3>
+        <p class="step__desc">See exactly how many points algorithmic bias is costing you, and what your score should fairly be.</p>
+      </div>
+      <div class="card" style="padding: 1.5rem;">
+        <div style="font-size: 2rem; margin-bottom: 0.75rem;">💡</div>
+        <h3 class="step__title">Personalised Tips</h3>
+        <p class="step__desc">Actionable steps to improve your score — based on your specific weak areas, not generic advice.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="landing-cta">
+  <div class="container">
+    <h2>Ready to understand your credit score?</h2>
+    <p>Free, private, and backed by peer-reviewed research. No credit impact.</p>
+    <a href="auth.html" class="btn btn--hero btn--lg">Get your free credit health report</a>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>
+      <strong style="color: rgba(255,255,255,0.9);">CreditLens Kenya</strong> —
+      Research by Alexander Wambugu (SCT213-C0002-0002/2022), JKUAT School of Computing and Information Technology.
+    </p>
+    <p style="margin-top: 0.5rem;">
+      <a href="research.html">Research Dashboard</a> ·
+      <a href="auth.html">Sign In</a>
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>

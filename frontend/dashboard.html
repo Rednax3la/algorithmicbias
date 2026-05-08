@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Credit Health Report — CreditLens Kenya</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__logo"><span class="nav__logo-icon">📊</span> CreditLens Kenya</a>
+    <div class="nav__links">
+      <a href="research.html" class="nav__link">Research Dashboard</a>
+      <a href="#" onclick="signOut(); return false;" class="btn btn--ghost btn--sm">Sign Out</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Loading overlay -->
+<div id="loading-overlay" class="loading-overlay">
+  <div class="spinner"></div>
+  <p>Loading your credit report...</p>
+</div>
+
+<!-- Dashboard header -->
+<div class="dashboard-header">
+  <div class="container">
+    <div class="dashboard-header__inner">
+      <div>
+        <h1 class="dashboard-header__title">Your Credit Health Report</h1>
+        <p class="dashboard-header__subtitle">
+          Last updated: <span id="last-updated">—</span>
+        </p>
+      </div>
+      <div style="display:flex; gap:0.75rem; flex-wrap:wrap;">
+        <a href="profile.html" class="btn btn--outline" style="border-color: rgba(255,255,255,0.5); color:white;">Update Profile</a>
+        <button class="btn" style="background:rgba(255,255,255,0.15); color:white;" onclick="refreshAssessment()">
+          Recalculate Score
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Main dashboard content -->
+<div class="dashboard-page">
+  <div class="container">
+
+    <div id="no-profile-alert" class="hidden" style="margin-top:1.5rem;">
+      <div class="alert alert--warning">
+        <span>⚠️</span>
+        <div>
+          You haven't completed your financial profile yet.
+          <a href="profile.html">Complete your profile</a> to see your credit health report.
+        </div>
+      </div>
+    </div>
+
+    <div id="dashboard-content">
+
+      <!-- Section A: Score + Approval -->
+      <div class="dashboard-grid mt-3">
+
+        <div class="card score-card">
+          <h3 style="margin-bottom:1.25rem;">Your Credit Score</h3>
+          <div class="score-gauge-wrapper">
+            <canvas id="score-gauge" class="score-gauge-canvas"></canvas>
+            <div class="score-gauge-number">
+              <div class="number" id="score-number">—</div>
+              <div class="label">out of 100</div>
+            </div>
+          </div>
+          <div class="score-status" id="score-status">—</div>
+          <p class="text-muted text-small" style="margin-top:0.5rem;" id="score-desc">Calculating your score...</p>
+        </div>
+
+        <div class="card approval-card">
+          <h3 style="margin-bottom:1.25rem;">Approval Likelihood</h3>
+          <div class="approval-rate" id="approval-rate">—%</div>
+          <div class="approval-rate-label">Estimated probability of loan approval</div>
+
+          <div style="margin-bottom:1rem;">
+            <div class="progress-bar" style="height:12px;">
+              <div class="progress-bar__fill" id="approval-bar" style="width:0%;"></div>
+            </div>
+          </div>
+
+          <div id="platform-text" class="approved-platforms" style="margin-bottom:1.25rem;">
+            <p class="text-small text-muted">Loading...</p>
+          </div>
+
+          <div style="border-top: 1px solid var(--border); padding-top:1rem;">
+            <p class="text-small" style="font-weight:600; margin-bottom:0.5rem;">Likely approved by:</p>
+            <div id="platform-tags"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Section B: What's affecting your score -->
+      <div class="card mt-3">
+        <h3 style="margin-bottom:1.5rem;">What's Affecting Your Score</h3>
+        <div class="factors-grid" id="factors-grid">
+          <div class="factor-section factor-section--positive">
+            <h4>Working For You</h4>
+            <div id="positive-factors">
+              <p class="text-muted text-small">Loading...</p>
+            </div>
+          </div>
+          <div class="factor-section factor-section--negative">
+            <h4>Working Against You</h4>
+            <div id="negative-factors">
+              <p class="text-muted text-small">Loading...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section C: Score without bias -->
+      <div class="card bias-comparison mt-3">
+        <h3 style="margin-bottom:1.5rem;">Your Score Without Algorithmic Bias</h3>
+        <div id="bias-comparison-content">
+          <div class="bias-bar-row">
+            <div class="bias-bar-label">
+              <span>Your actual score</span>
+              <span id="actual-score-label">—</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-bar__fill progress-bar__fill--yellow" id="actual-score-bar" style="width:0%;"></div>
+            </div>
+          </div>
+          <div class="bias-bar-row" style="margin-top:1rem;">
+            <div class="bias-bar-label">
+              <span>Score without bias penalties</span>
+              <span id="fair-score-label">—</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-bar__fill progress-bar__fill--green" id="fair-score-bar" style="width:0%;"></div>
+            </div>
+          </div>
+          <div class="bias-callout" id="bias-callout" style="margin-top:1.25rem;">
+            <p><strong id="bias-callout-text">Calculating...</strong></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section D: Recommendations -->
+      <div class="card mt-3">
+        <h3 style="margin-bottom:1.25rem;">How To Improve Your Score</h3>
+        <div id="recommendations-list">
+          <p class="text-muted text-small">Loading recommendations...</p>
+        </div>
+      </div>
+
+      <!-- Section E: Score history -->
+      <div class="card mt-3">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.25rem;">
+          <h3>Your Score History</h3>
+          <span class="badge badge--blue" id="history-count"></span>
+        </div>
+        <div style="position:relative; height:200px;">
+          <canvas id="history-chart"></canvas>
+        </div>
+        <p class="text-muted text-small mt-2">Check back after making changes to see your progress.</p>
+      </div>
+
+    </div><!-- /dashboard-content -->
+  </div>
+</div>
+
+<script src="js/supabase.js"></script>
+<script src="js/dashboard.js"></script>
+</body>
+</html>

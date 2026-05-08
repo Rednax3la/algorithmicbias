@@ -1,0 +1,35 @@
+# Environment
+.env
+*.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+env/
+
+# Generated data files (large)
+data/*.csv
+
+# Trained model binaries (can be regenerated)
+# Comment this out if you want to commit models to git
+models/*.pkl
+
+# Keep JSON metrics (small, useful for API fallback)
+!models/fairness_metrics.json
+!models/shap_feature_importance.json
+!models/eval_metrics.json
+!models/.gitkeep
+
+# Node (if any tooling added later)
+node_modules/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/settings.json
+*.swp

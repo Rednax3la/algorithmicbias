@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bias Research Dashboard — CreditLens Kenya</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__logo"><span class="nav__logo-icon">📊</span> CreditLens Kenya</a>
+    <div class="nav__links">
+      <a href="index.html" class="nav__link">Home</a>
+      <a href="auth.html" class="btn btn--outline btn--sm">Sign In</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Research hero -->
+<div class="research-hero">
+  <div class="container">
+    <h1>Algorithmic Bias Research Dashboard</h1>
+    <p>
+      Findings from a JKUAT Data Science research project auditing algorithmic bias in
+      Kenyan digital credit scoring. All data shown is anonymized synthetic data calibrated
+      to published research. Where real user data exists (with consent), it supplements the dataset.
+    </p>
+    <div class="research-meta">
+      <div class="research-meta__item"><strong>Dataset:</strong> 10,000 synthetic applications</div>
+      <div class="research-meta__item"><strong>Models:</strong> Logistic Regression, Random Forest, Gradient Boosting</div>
+      <div class="research-meta__item"><strong>Framework:</strong> Fairness through Awareness (Dwork et al., 2012)</div>
+    </div>
+  </div>
+</div>
+
+<div class="research-page">
+  <div class="container">
+
+    <!-- Loading state -->
+    <div id="research-loading" style="text-align:center; padding:3rem;">
+      <div class="spinner" style="margin:0 auto 1rem;"></div>
+      <p class="text-muted">Loading research data...</p>
+    </div>
+
+    <div id="research-content" class="hidden">
+
+      <!-- Section 1: Approval Rate Disparities -->
+      <section class="research-section">
+        <h2>1. Approval Rate Disparities</h2>
+        <p class="section-desc text-muted">
+          Approval rates vary significantly across demographic groups. These disparities
+          persist even after controlling for repayment history and income, suggesting
+          algorithmic bias rather than legitimate risk differentiation.
+        </p>
+        <div class="charts-grid">
+          <div class="chart-card">
+            <h4>Urban vs Rural Approval Rate</h4>
+            <div class="chart-container">
+              <canvas id="chart-location"></canvas>
+            </div>
+            <p class="text-small text-muted mt-2">
+              Urban borrowers approved at 2.4× the rate of rural borrowers.
+              Source: KIPPRA 2021, FinAccess 2021.
+            </p>
+          </div>
+          <div class="chart-card">
+            <h4>Approval Rate by Gender</h4>
+            <div class="chart-container">
+              <canvas id="chart-gender"></canvas>
+            </div>
+            <p class="text-small text-muted mt-2">
+              A 7% gender gap in approvals, documented as ~37% underfunding penalty.
+              Source: Asante et al., 2025; FinAccess 2024.
+            </p>
+          </div>
+          <div class="chart-card">
+            <h4>Approval Rate by Device Type</h4>
+            <div class="chart-container">
+              <canvas id="chart-device"></canvas>
+            </div>
+            <p class="text-small text-muted mt-2">
+              Device type equivalent to 30th percentile credit score gap.
+              Source: Berg et al., 2020 (Review of Financial Studies).
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 2: Fairness Metrics -->
+      <section class="research-section">
+        <h2>2. Fairness Metrics by Model</h2>
+        <p class="section-desc text-muted">
+          Fairness measured using three standard metrics: Disparate Impact (DI — ideal ≥ 0.8),
+          Statistical Parity Difference (SPD — ideal near 0), and Equal Opportunity Difference
+          (EOD — ideal near 0). Values outside acceptable ranges indicate discriminatory outcomes.
+        </p>
+        <div class="card card--flat" style="overflow-x:auto;">
+          <table class="fairness-table" id="fairness-table">
+            <thead>
+              <tr>
+                <th>Model</th>
+                <th>Protected Attribute</th>
+                <th>Disparate Impact (DI)</th>
+                <th>Stat. Parity Diff (SPD)</th>
+                <th>Equal Opp. Diff (EOD)</th>
+                <th>Assessment</th>
+              </tr>
+            </thead>
+            <tbody id="fairness-table-body">
+              <tr><td colspan="6" class="text-center text-muted" style="padding:2rem;">Loading...</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="text-small text-muted mt-2">
+          DI ≥ 0.8 = Fair · 0.6–0.8 = Concern · &lt;0.6 = Unfair (EEOC 4/5ths rule)
+        </p>
+      </section>
+
+      <!-- Section 3: Feature Importance -->
+      <section class="research-section">
+        <h2>3. Feature Importance (SHAP Analysis)</h2>
+        <p class="section-desc text-muted">
+          SHAP (SHapley Additive exPlanations) values quantify the contribution of each feature
+          to the model's predictions. Features highlighted in red are bias-flagged — they
+          correlate with protected attributes rather than genuine creditworthiness.
+        </p>
+        <div class="card">
+          <div id="feature-importance-list">
+            <p class="text-muted text-small">Loading feature importance...</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 4: Real User Patterns -->
+      <section class="research-section">
+        <h2>4. User-Contributed Data Patterns</h2>
+        <p class="section-desc text-muted">
+          Anonymized patterns from consenting users. Data is bucketed into groups for privacy
+          (no individual-level data is shown). This supplements the synthetic dataset with
+          real-world usage patterns from Kenya.
+        </p>
+        <div class="alert alert--info" style="margin-bottom:1.5rem;">
+          <span>ℹ️</span>
+          <div>
+            <strong>Privacy notice:</strong> Only users who explicitly consented contribute to this dataset.
+            Data is bucketed — exact ages, incomes and locations are never shown.
+          </div>
+        </div>
+        <div class="charts-grid">
+          <div class="chart-card">
+            <h4>Score Distribution by Location</h4>
+            <div class="chart-container">
+              <canvas id="chart-user-location"></canvas>
+            </div>
+          </div>
+          <div class="chart-card">
+            <h4>Score Distribution by Device Tier</h4>
+            <div class="chart-container">
+              <canvas id="chart-user-device"></canvas>
+            </div>
+          </div>
+        </div>
+        <p class="text-small text-muted mt-2" id="user-data-note"></p>
+      </section>
+
+      <!-- Dataset stats -->
+      <section class="research-section">
+        <h2>5. Dataset Overview</h2>
+        <div class="charts-grid" id="dataset-stats-grid">
+          <div class="chart-card">
+            <h4>Overall Approval Rate</h4>
+            <div class="chart-container">
+              <canvas id="chart-overall"></canvas>
+            </div>
+          </div>
+          <div class="chart-card">
+            <h4>Score Distribution</h4>
+            <div class="chart-container">
+              <canvas id="chart-score-dist"></canvas>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div><!-- /research-content -->
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <p>
+      Research by <strong style="color:rgba(255,255,255,0.9);">Alexander Wambugu</strong>
+      (SCT213-C0002-0002/2022), JKUAT School of Computing and Information Technology.
+    </p>
+    <p style="margin-top:0.5rem;">
+      Sources: KIPPRA 2021 · FinAccess 2021/2024 · Asante et al. 2025 · Berg et al. 2020 ·
+      Bertrand &amp; Kamenica 2017 · Kenya Housing Survey 2023/24 · CBK Annual Reports
+    </p>
+  </div>
+</footer>
+
+<script src="js/supabase.js"></script>
+<script src="js/research.js"></script>
+</body>
+</html>
