@@ -4,7 +4,7 @@
 
 CreditLens is a personal credit health tool for Kenyan digital borrowers. Enter your financial profile and get a personalised credit score estimate, approval likelihood across major digital lenders, and a clear breakdown of which penalties are legitimate risk factors — and which are algorithmic bias.
 
-Live: [creditlens.vercel.app](https://creditlens.vercel.app) &nbsp;·&nbsp; [Research Dashboard](https://creditlens.vercel.app/research.html)
+Live: [creditlenskenya.vercel.app](https://creditlenskenya.vercel.app) &nbsp;·&nbsp; [Research Dashboard](https://creditlenskenya.vercel.app/research.html)
 
 ---
 
