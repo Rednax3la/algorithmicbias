@@ -2,7 +2,11 @@
 
 **Know your credit score. See the bias behind it.**
 
-CreditLens is a personal credit health tool for Kenyan digital borrowers. Enter your financial profile and get a personalised credit score estimate, approval likelihood across major digital lenders, and a clear breakdown of which penalties are legitimate risk factors — and which are algorithmic bias.
+> **Auditing Algorithmic Bias in Digital Credit Scoring Using Alternative Financial Data: A Simulation-Based Analysis**
+> Alexander Wambugu · SCT213-C0002-0002/2022 · BSc Data Science & Analytics
+> Jomo Kenyatta University of Agriculture and Technology (JKUAT) · 2022–2025
+
+CreditLens is the research deliverable and public-facing tool for this JKUAT Data Science thesis. Enter your financial profile and get a personalised credit score estimate, approval likelihood across major digital lenders, and a clear breakdown of which penalties are legitimate risk factors — and which are algorithmic bias.
 
 Live: [creditlenskenya.vercel.app](https://creditlenskenya.vercel.app) &nbsp;·&nbsp; [Research Dashboard](https://creditlenskenya.vercel.app/research.html)
 
@@ -114,7 +118,7 @@ Bias parameters are calibrated to peer-reviewed research:
 
 Full citations: [`src/data/bias_sources.md`](src/data/bias_sources.md)
 
-This project was developed as part of a Data Science thesis at JKUAT (2022–2025).
+Full thesis: *Auditing Algorithmic Bias in Digital Credit Scoring Using Alternative Financial Data: A Simulation-Based Analysis* — JKUAT, School of Computing and Information Technology.
 
 ---
 
