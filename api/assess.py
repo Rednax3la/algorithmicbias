@@ -210,11 +210,12 @@ class handler(BaseHTTPRequestHandler):
         recommendations = get_recommendations(data, breakdown)
         self._save_to_supabase(data, credit_score, approval_probability, breakdown, top_features)
 
+        credit_score = float(credit_score)
         self._respond(200, {
             "credit_score": round(credit_score, 2),
-            "approval_probability": approval_probability,
-            "approved": credit_score >= 50,
-            "score_breakdown": breakdown,
+            "approval_probability": float(approval_probability),
+            "approved": bool(credit_score >= 50),
+            "score_breakdown": {k: float(v) for k, v in breakdown.items()},
             "top_features": top_features,
             "recommendations": recommendations,
         })
