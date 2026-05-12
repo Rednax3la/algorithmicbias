@@ -39,11 +39,12 @@ async function refreshAssessment() {
     showApiError('Network error — could not reach /api/assess. ' + e.message)
     return
   }
+  const rawText = await resp.text()
   try {
-    result = await resp.json()
+    result = JSON.parse(rawText)
   } catch (e) {
     document.getElementById('loading-overlay').classList.add('hidden')
-    showApiError(`API returned HTTP ${resp.status} (non-JSON). The function may not be deployed yet.`)
+    showApiError(`API HTTP ${resp.status} — body: <pre style="font-size:0.7rem;white-space:pre-wrap;overflow:auto;max-height:200px;">${rawText.substring(0, 500)}</pre>`)
     return
   }
 
