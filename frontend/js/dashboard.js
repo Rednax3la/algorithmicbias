@@ -25,52 +25,59 @@ async function refreshAssessment() {
   }
 
   document.getElementById('loading-overlay').classList.remove('hidden')
+  document.getElementById('no-profile-alert').classList.add('hidden')
 
+  let resp, result
   try {
-    const resp = await fetch('/api/assess', {
+    resp = await fetch('/api/assess', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ user_id: session.user.id, ...profile })
     })
-    const result = await resp.json()
-    document.getElementById('loading-overlay').classList.add('hidden')
-
-    if (resp.ok && result.credit_score != null) {
-      // Normalise field names from API response to match DB column names
-      const assessment = {
-        credit_score: result.credit_score,
-        approval_probability: result.approval_probability,
-        approved: result.approved,
-        score_without_bias: result.score_breakdown?.score_without_bias ?? result.credit_score,
-        income_contribution: result.score_breakdown?.income_contribution ?? 0,
-        repayment_contribution: result.score_breakdown?.repayment_contribution ?? 0,
-        account_age_contribution: result.score_breakdown?.account_age_contribution ?? 0,
-        transaction_contribution: result.score_breakdown?.transaction_contribution ?? 0,
-        location_penalty: result.score_breakdown?.location_penalty ?? 0,
-        device_penalty: result.score_breakdown?.device_penalty ?? 0,
-        gender_penalty: result.score_breakdown?.gender_penalty ?? 0,
-        created_at: new Date().toISOString(),
-      }
-      document.getElementById('no-profile-alert').classList.add('hidden')
-      document.getElementById('dashboard-content').classList.remove('hidden')
-
-      // Fetch history for chart (non-blocking)
-      const { data: history } = await supabase
-        .from('assessments')
-        .select('credit_score, created_at')
-        .eq('user_id', session.user.id)
-        .order('created_at', { ascending: false })
-        .limit(20)
-
-      renderDashboard(assessment, history || [assessment])
-      renderProfileSection(profile, session.user.email)
-    } else {
-      console.error('Assessment error:', result)
-    }
+    result = await resp.json()
   } catch (e) {
     document.getElementById('loading-overlay').classList.add('hidden')
-    console.error('Refresh failed:', e)
+    showApiError('Could not reach the scoring API. Check your connection and try again.')
+    return
   }
+
+  document.getElementById('loading-overlay').classList.add('hidden')
+
+  if (!resp.ok || result.credit_score == null) {
+    showApiError('Scoring API returned an error: ' + (result?.error || `HTTP ${resp.status}`))
+    return
+  }
+
+  const assessment = {
+    credit_score: result.credit_score,
+    approval_probability: result.approval_probability,
+    approved: result.approved,
+    score_without_bias: result.score_breakdown?.score_without_bias ?? result.credit_score,
+    income_contribution: result.score_breakdown?.income_contribution ?? 0,
+    repayment_contribution: result.score_breakdown?.repayment_contribution ?? 0,
+    account_age_contribution: result.score_breakdown?.account_age_contribution ?? 0,
+    transaction_contribution: result.score_breakdown?.transaction_contribution ?? 0,
+    location_penalty: result.score_breakdown?.location_penalty ?? 0,
+    device_penalty: result.score_breakdown?.device_penalty ?? 0,
+    gender_penalty: result.score_breakdown?.gender_penalty ?? 0,
+    created_at: new Date().toISOString(),
+  }
+
+  const { data: history } = await supabase
+    .from('assessments')
+    .select('credit_score, created_at')
+    .eq('user_id', session.user.id)
+    .order('created_at', { ascending: false })
+    .limit(20)
+
+  renderDashboard(assessment, history?.length ? history : [assessment])
+  renderProfileSection(profile, session.user.email)
+}
+
+function showApiError(msg) {
+  const el = document.getElementById('no-profile-alert')
+  el.innerHTML = `<div class="alert alert--warning"><span>⚠️</span><div>${msg} &nbsp;<button class="btn btn--sm btn--outline" onclick="refreshAssessment()">Retry</button></div></div>`
+  el.classList.remove('hidden')
 }
 
 // ── Main load ────────────────────────────────────────────────
