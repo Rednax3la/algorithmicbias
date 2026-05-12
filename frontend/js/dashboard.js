@@ -78,6 +78,15 @@ async function refreshAssessment() {
 
   const latest = assessments[0]
   renderDashboard(latest, assessments)
+
+  // Load and render profile details
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('*')
+    .eq('id', session.user.id)
+    .maybeSingle()
+
+  if (profile) renderProfileSection(profile, session.user.email)
 })()
 
 function renderDashboard(a, history) {
@@ -328,6 +337,32 @@ function renderHistoryChart(history) {
       }
     }
   })
+}
+
+function renderProfileSection(p, email) {
+  const deviceLabels = { feature_phone: 'Feature Phone', budget: 'Budget Smartphone', mid: 'Mid-Range Smartphone', high_end: 'High-End Smartphone' }
+  const fields = [
+    { label: 'Email',        value: email },
+    { label: 'Age',          value: p.age ? `${p.age} years` : '—' },
+    { label: 'Gender',       value: p.gender === 'M' ? 'Male' : p.gender === 'F' ? 'Female' : p.gender || '—' },
+    { label: 'County',       value: p.county || '—' },
+    { label: 'Location',     value: p.location_type || '—' },
+    { label: 'Education',    value: p.education || '—' },
+    { label: 'Employment',   value: p.employment_status || '—' },
+    { label: 'Monthly Income', value: p.monthly_income ? `KES ${Number(p.monthly_income).toLocaleString()}` : '—' },
+    { label: 'M-Pesa Tx/month', value: p.mpesa_transactions_monthly ? `${p.mpesa_transactions_monthly} transactions` : '—' },
+    { label: 'Account Age',  value: p.account_age_months ? `${p.account_age_months} months` : '—' },
+    { label: 'Previous Loans', value: p.previous_loans != null ? p.previous_loans : '—' },
+    { label: 'Repayment Rate', value: p.repayment_rate != null && p.previous_loans > 0 ? `${Math.round(p.repayment_rate * 100)}%` : 'N/A' },
+    { label: 'Device',       value: deviceLabels[p.device_type] || p.device_type || '—' },
+    { label: 'App Usage',    value: p.app_usage_days != null ? `${p.app_usage_days} days/month` : '—' },
+  ]
+
+  document.getElementById('profile-details').innerHTML = fields.map(f => `
+    <div style="background:var(--bg);border-radius:var(--radius);padding:0.875rem;">
+      <div style="font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-3);margin-bottom:0.25rem;">${f.label}</div>
+      <div style="font-size:0.9rem;font-weight:600;color:var(--text);">${f.value}</div>
+    </div>`).join('')
 }
 
 function drawScoreGauge(score) {
