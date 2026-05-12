@@ -19,7 +19,12 @@ async function refreshAssessment() {
     .eq('id', session.user.id)
     .maybeSingle()
 
-  if (!profile) return
+  if (!profile) {
+    window.location.href = 'profile.html'
+    return
+  }
+
+  document.getElementById('loading-overlay').classList.remove('hidden')
 
   try {
     const resp = await fetch('/api/assess', {
@@ -27,10 +32,43 @@ async function refreshAssessment() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ user_id: session.user.id, ...profile })
     })
-    if (resp.ok) {
-      window.location.reload()
+    const result = await resp.json()
+    document.getElementById('loading-overlay').classList.add('hidden')
+
+    if (resp.ok && result.credit_score != null) {
+      // Normalise field names from API response to match DB column names
+      const assessment = {
+        credit_score: result.credit_score,
+        approval_probability: result.approval_probability,
+        approved: result.approved,
+        score_without_bias: result.score_breakdown?.score_without_bias ?? result.credit_score,
+        income_contribution: result.score_breakdown?.income_contribution ?? 0,
+        repayment_contribution: result.score_breakdown?.repayment_contribution ?? 0,
+        account_age_contribution: result.score_breakdown?.account_age_contribution ?? 0,
+        transaction_contribution: result.score_breakdown?.transaction_contribution ?? 0,
+        location_penalty: result.score_breakdown?.location_penalty ?? 0,
+        device_penalty: result.score_breakdown?.device_penalty ?? 0,
+        gender_penalty: result.score_breakdown?.gender_penalty ?? 0,
+        created_at: new Date().toISOString(),
+      }
+      document.getElementById('no-profile-alert').classList.add('hidden')
+      document.getElementById('dashboard-content').classList.remove('hidden')
+
+      // Fetch history for chart (non-blocking)
+      const { data: history } = await supabase
+        .from('assessments')
+        .select('credit_score, created_at')
+        .eq('user_id', session.user.id)
+        .order('created_at', { ascending: false })
+        .limit(20)
+
+      renderDashboard(assessment, history || [assessment])
+      renderProfileSection(profile, session.user.email)
+    } else {
+      console.error('Assessment error:', result)
     }
   } catch (e) {
+    document.getElementById('loading-overlay').classList.add('hidden')
     console.error('Refresh failed:', e)
   }
 }
@@ -54,25 +92,8 @@ async function refreshAssessment() {
   document.getElementById('loading-overlay').classList.add('hidden')
 
   if (!assessments || assessments.length === 0) {
-    // No assessment yet — check if profile exists
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('id')
-      .eq('id', session.user.id)
-      .maybeSingle()
-
-    if (!profile) {
-      document.getElementById('no-profile-alert').classList.remove('hidden')
-      document.getElementById('dashboard-content').classList.add('hidden')
-    } else {
-      document.getElementById('no-profile-alert').innerHTML = `
-        <div class="alert alert--warning">
-          <span>⚠️</span>
-          <div>Your profile is saved but we haven't calculated your score yet.
-          <a href="profile.html">Update your profile</a> to trigger an assessment.</div>
-        </div>`
-      document.getElementById('no-profile-alert').classList.remove('hidden')
-    }
+    // No assessment in DB yet — auto-calculate now if profile exists
+    await refreshAssessment()
     return
   }
 
