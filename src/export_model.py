@@ -44,7 +44,7 @@ def export_model():
     ]])
 
     prob = model.predict_proba(test_input)[0][1]
-    print(f"Model validation: test input → approval probability = {prob:.3f}")
+    print(f"Model validation: test input -> approval probability = {prob:.3f}")
     print(f"Model type: {type(model).__name__}")
     print(f"Model saved at: {dst}")
     print("Export complete.")

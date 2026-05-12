@@ -134,7 +134,7 @@ if __name__ == "__main__":
 
     print(f"\nTop features ({method}):")
     for f in features[:8]:
-        bias_tag = " ⚠ BIAS" if f["is_bias_flagged"] else ""
+        bias_tag = " [BIAS]" if f["is_bias_flagged"] else ""
         print(f"  {f['feature']:30s} {f['importance']:.3f}{bias_tag}")
 
     print(f"\nSaved to {out_path}")

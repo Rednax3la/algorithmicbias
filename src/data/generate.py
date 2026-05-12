@@ -67,7 +67,9 @@ def generate_dataset(n_samples: int = 10_000, bias: BiasParameters = None) -> pd
     ages = rng.normal(32, 10, n_samples).clip(18, 65).astype(int)
     genders = rng.choice(["M", "F"], n_samples, p=[0.55, 0.45])
 
-    county_probs = [0.25] + [0.08] * 4 + [0.05] * 9
+    county_probs_raw = [0.25] + [0.08] * 4 + [0.05] * 9
+    total = sum(county_probs_raw)
+    county_probs = [p / total for p in county_probs_raw]
     counties = rng.choice(COUNTIES, n_samples, p=county_probs)
     location_types = ["Urban" if c in URBAN_COUNTIES else "Rural" for c in counties]
 
@@ -126,7 +128,9 @@ def generate_dataset(n_samples: int = 10_000, bias: BiasParameters = None) -> pd
     device_types = [rng.choice(DEVICE_TYPES, p=p) for p in device_probs]
 
     # Compute base credit score (rule-based, 0–100)
-    income_contrib = (monthly_income / 500_000 * 25).clip(0, 25)
+    # Use log-scale for income so median earners (25k) get a reasonable contribution
+    import numpy as _np
+    income_contrib = (_np.log1p(monthly_income) / _np.log1p(500_000) * 25).clip(0, 25)
     repayment_contrib = repayment_rate * 25
     account_contrib = (account_age / 60 * 15).clip(0, 15)
     tx_contrib = (mpesa_tx / 150 * 20).clip(0, 20)
@@ -180,7 +184,7 @@ if __name__ == "__main__":
     os.makedirs("data", exist_ok=True)
     df = generate_dataset(n_samples=10_000)
     df.to_csv("data/synthetic_dataset.csv", index=False)
-    print(f"Generated {len(df):,} records → data/synthetic_dataset.csv")
+    print(f"Generated {len(df):,} records -> data/synthetic_dataset.csv")
     print(f"Overall approval rate: {df['approved'].mean():.1%}")
     print(f"Urban approval rate:   {df[df.location_type=='Urban']['approved'].mean():.1%}")
     print(f"Rural approval rate:   {df[df.location_type=='Rural']['approved'].mean():.1%}")

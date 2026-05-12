@@ -1,0 +1,157 @@
+{
+  "models": {
+    "logistic_regression": {
+      "gender": {
+        "disparate_impact": 0.851,
+        "statistical_parity_difference": -0.1,
+        "equal_opportunity_difference": -0.014
+      },
+      "location": {
+        "disparate_impact": 0.361,
+        "statistical_parity_difference": -0.557,
+        "equal_opportunity_difference": -0.037
+      },
+      "device": {
+        "disparate_impact": 0.594,
+        "statistical_parity_difference": -0.328,
+        "equal_opportunity_difference": -0.012
+      }
+    },
+    "random_forest": {
+      "gender": {
+        "disparate_impact": 0.963,
+        "statistical_parity_difference": -0.024,
+        "equal_opportunity_difference": 0.033
+      },
+      "location": {
+        "disparate_impact": 0.313,
+        "statistical_parity_difference": -0.622,
+        "equal_opportunity_difference": -0.176
+      },
+      "device": {
+        "disparate_impact": 0.616,
+        "statistical_parity_difference": -0.308,
+        "equal_opportunity_difference": -0.033
+      }
+    },
+    "gradient_boosting": {
+      "gender": {
+        "disparate_impact": 0.9,
+        "statistical_parity_difference": -0.067,
+        "equal_opportunity_difference": 0.005
+      },
+      "location": {
+        "disparate_impact": 0.366,
+        "statistical_parity_difference": -0.563,
+        "equal_opportunity_difference": -0.058
+      },
+      "device": {
+        "disparate_impact": 0.622,
+        "statistical_parity_difference": -0.307,
+        "equal_opportunity_difference": -0.013
+      }
+    }
+  },
+  "approval_rates": {
+    "by_location": {
+      "urban": 0.905,
+      "rural": 0.283
+    },
+    "by_gender": {
+      "male": 0.643,
+      "female": 0.619
+    },
+    "by_device": {
+      "feature_phone": 0.307,
+      "budget": 0.58,
+      "mid": 0.794,
+      "high_end": 0.83
+    }
+  },
+  "feature_importance": [
+    {
+      "feature": "Location Type",
+      "importance": 0.2711,
+      "is_bias_flagged": true
+    },
+    {
+      "feature": "Account Age",
+      "importance": 0.1767,
+      "is_bias_flagged": false
+    },
+    {
+      "feature": "Monthly Income",
+      "importance": 0.132,
+      "is_bias_flagged": false
+    },
+    {
+      "feature": "M-Pesa Transactions",
+      "importance": 0.1184,
+      "is_bias_flagged": false
+    },
+    {
+      "feature": "Device Type",
+      "importance": 0.0882,
+      "is_bias_flagged": true
+    },
+    {
+      "feature": "Repayment Rate",
+      "importance": 0.0852,
+      "is_bias_flagged": false
+    },
+    {
+      "feature": "App Usage Days",
+      "importance": 0.0292,
+      "is_bias_flagged": false
+    },
+    {
+      "feature": "Platform Connections",
+      "importance": 0.0178,
+      "is_bias_flagged": false
+    },
+    {
+      "feature": "Avg Transaction Amount",
+      "importance": 0.0162,
+      "is_bias_flagged": false
+    },
+    {
+      "feature": "Previous Loans",
+      "importance": 0.015,
+      "is_bias_flagged": false
+    },
+    {
+      "feature": "Employment Status",
+      "importance": 0.0135,
+      "is_bias_flagged": false
+    },
+    {
+      "feature": "Education",
+      "importance": 0.013,
+      "is_bias_flagged": false
+    },
+    {
+      "feature": "Age",
+      "importance": 0.0125,
+      "is_bias_flagged": false
+    },
+    {
+      "feature": "Gender",
+      "importance": 0.0113,
+      "is_bias_flagged": true
+    }
+  ],
+  "dataset_stats": {
+    "total_applications": 10000,
+    "overall_approval_rate": 0.631
+  },
+  "score_distribution": [
+    2,
+    7,
+    14,
+    23,
+    28,
+    17,
+    7,
+    2
+  ]
+}

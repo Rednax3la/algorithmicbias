@@ -1,0 +1,76 @@
+{
+  "method": "SHAP",
+  "model": "random_forest",
+  "features": [
+    {
+      "feature": "Location Type",
+      "importance": 0.2711,
+      "is_bias_flagged": true
+    },
+    {
+      "feature": "Account Age (months)",
+      "importance": 0.1767,
+      "is_bias_flagged": false
+    },
+    {
+      "feature": "Monthly Income",
+      "importance": 0.132,
+      "is_bias_flagged": false
+    },
+    {
+      "feature": "M-Pesa Transactions",
+      "importance": 0.1184,
+      "is_bias_flagged": false
+    },
+    {
+      "feature": "Device Type",
+      "importance": 0.0882,
+      "is_bias_flagged": true
+    },
+    {
+      "feature": "Repayment Rate",
+      "importance": 0.0852,
+      "is_bias_flagged": false
+    },
+    {
+      "feature": "App Usage Days",
+      "importance": 0.0292,
+      "is_bias_flagged": false
+    },
+    {
+      "feature": "Platform Connections",
+      "importance": 0.0178,
+      "is_bias_flagged": false
+    },
+    {
+      "feature": "Avg Transaction Amount",
+      "importance": 0.0162,
+      "is_bias_flagged": false
+    },
+    {
+      "feature": "Previous Loans",
+      "importance": 0.015,
+      "is_bias_flagged": false
+    },
+    {
+      "feature": "Employment Status",
+      "importance": 0.0135,
+      "is_bias_flagged": false
+    },
+    {
+      "feature": "Education Level",
+      "importance": 0.013,
+      "is_bias_flagged": false
+    },
+    {
+      "feature": "Age",
+      "importance": 0.0125,
+      "is_bias_flagged": false
+    },
+    {
+      "feature": "Gender",
+      "importance": 0.0113,
+      "is_bias_flagged": true
+    }
+  ]
+}

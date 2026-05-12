@@ -13,9 +13,8 @@ env/
 # Generated data files (large)
 data/*.csv
 
-# Trained model binaries (can be regenerated)
-# Comment this out if you want to commit models to git
-models/*.pkl
+# Model binaries are committed — API needs them at runtime on Vercel
+# models/*.pkl
 
 # Keep JSON metrics (small, useful for API fallback)
 !models/fairness_metrics.json
