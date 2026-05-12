@@ -34,10 +34,16 @@ async function refreshAssessment() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ user_id: session.user.id, ...profile })
     })
+  } catch (e) {
+    document.getElementById('loading-overlay').classList.add('hidden')
+    showApiError('Network error — could not reach /api/assess. ' + e.message)
+    return
+  }
+  try {
     result = await resp.json()
   } catch (e) {
     document.getElementById('loading-overlay').classList.add('hidden')
-    showApiError('Could not reach the scoring API. Check your connection and try again.')
+    showApiError(`API returned HTTP ${resp.status} (non-JSON). The function may not be deployed yet.`)
     return
   }
 
