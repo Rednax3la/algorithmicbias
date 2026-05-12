@@ -156,28 +156,34 @@ def score_to_anon_buckets(data: dict, credit_score: float) -> dict:
 class handler(BaseHTTPRequestHandler):
     def do_POST(self):
         try:
-            length = int(self.headers.get("Content-Length", 0))
-            body = self.rfile.read(length)
+            self._handle_post()
+        except Exception as e:
+            import traceback
+            self._respond(500, {"error": str(e), "trace": traceback.format_exc()})
+
+    def _handle_post(self):
+        length = int(self.headers.get("Content-Length", 0))
+        body = self.rfile.read(length)
+        try:
             data = json.loads(body)
         except Exception:
             self._respond(400, {"error": "Invalid JSON body"})
             return
 
-        # Load model
-        model_path = os.path.join(os.path.dirname(__file__), "..", "models", "random_forest.pkl")
+        # Load model (fallback to rule-based if not found)
+        model = None
         try:
+            model_path = os.path.join(os.path.dirname(__file__), "..", "models", "random_forest.pkl")
             model = joblib.load(model_path)
-        except FileNotFoundError:
-            # Model not trained yet — use rule-based scoring
+        except Exception:
             model = None
 
         # Compute credit score
         if model is not None:
             features = engineer_features(data)
-            raw_prob = model.predict_proba(features)[0][1]  # probability of approval
+            raw_prob = model.predict_proba(features)[0][1]
             base_score = raw_prob * 100
         else:
-            # Fallback rule-based score
             income_norm = min(data.get("monthly_income", 0) / 100_000, 1.0)
             tx_norm = min(data.get("mpesa_transactions_monthly", 0) / 150, 1.0)
             repayment = data.get("repayment_rate", 1.0) if data.get("previous_loans", 0) > 0 else 0.8
@@ -186,7 +192,6 @@ class handler(BaseHTTPRequestHandler):
             base_score = (income_norm * 25 + tx_norm * 20 + repayment * 25 +
                           account_age_norm * 15 + age_norm * 5 + 10)
 
-        # Apply bias penalties
         breakdown = compute_score_breakdown(data, base_score)
         total_bias = breakdown["location_penalty"] + breakdown["device_penalty"] + breakdown["gender_penalty"]
         credit_score = min(max(base_score + total_bias, 0), 100)
@@ -203,19 +208,16 @@ class handler(BaseHTTPRequestHandler):
         ]
 
         recommendations = get_recommendations(data, breakdown)
-
-        # Save to Supabase (using service key — server-side only)
         self._save_to_supabase(data, credit_score, approval_probability, breakdown, top_features)
 
-        response_body = {
+        self._respond(200, {
             "credit_score": round(credit_score, 2),
             "approval_probability": approval_probability,
             "approved": credit_score >= 50,
             "score_breakdown": breakdown,
             "top_features": top_features,
             "recommendations": recommendations,
-        }
-        self._respond(200, response_body)
+        })
 
     def _save_to_supabase(self, data, credit_score, approval_probability, breakdown, top_features):
         """Save assessment to Supabase using the service key."""
