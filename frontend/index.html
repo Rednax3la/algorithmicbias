@@ -5,43 +5,73 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CreditLens Kenya — Know Your Credit Score & Understand the Bias</title>
   <link rel="stylesheet" href="css/styles.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 </head>
 <body>
 
-<!-- Navigation -->
-<nav class="nav">
+<nav class="nav" id="main-nav">
   <div class="nav__inner">
     <a href="index.html" class="nav__logo">
-      <span class="nav__logo-icon">📊</span>
-      CreditLens Kenya
+      <span class="nav__logo-icon">📊</span> CreditLens
     </a>
     <div class="nav__links">
-      <a href="research.html" class="nav__link">Research Dashboard</a>
-      <a href="auth.html" class="btn btn--outline btn--sm">Sign In</a>
+      <a href="research.html" class="nav__link">Research</a>
+      <a href="auth.html" class="nav__link">Sign In</a>
+      <a href="auth.html" class="btn btn--primary btn--sm">Get Started</a>
     </div>
+    <button class="nav__hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="nav__mobile-menu" id="mobile-menu">
+    <a href="research.html">Research Dashboard</a>
+    <a href="auth.html">Sign In</a>
+    <a href="auth.html" class="btn btn--primary" style="border-radius:12px; justify-content:center;">Get Started Free</a>
   </div>
 </nav>
 
 <!-- Hero -->
 <section class="hero">
+  <div class="hero__blobs">
+    <div class="hero__blob hero__blob--1"></div>
+    <div class="hero__blob hero__blob--2"></div>
+    <div class="hero__blob hero__blob--3"></div>
+  </div>
   <div class="container">
     <div class="hero__content">
-      <p class="hero__eyebrow">JKUAT Research Project · Digital Credit Fairness</p>
-      <h1 class="hero__title">
+      <p class="hero__eyebrow">
+        <span class="live-dot"></span>
+        Digital Credit Fairness Tool
+      </p>
+      <h1 class="hero__title fade-up">
         Know where you stand.<br />
         <span>Understand why.</span>
       </h1>
-      <p class="hero__subtitle">
-        Digital lenders in Kenya use algorithms that may disadvantage you based on
-        your location, the phone you use, or your gender — not your actual ability to repay.
-        This tool gives you your personalized credit score and flags which penalties are
-        <strong>algorithmic bias</strong>, not legitimate risk.
+      <p class="hero__subtitle fade-up delay-1">
+        Kenyan digital lenders score you using algorithms that may penalise your
+        location, phone, or gender — not your actual ability to repay.
+        CreditLens gives you your personalised score and flags every unfair penalty by name.
       </p>
-      <div class="hero__cta">
-        <a href="auth.html" class="btn btn--hero">Check your credit health — it's free</a>
-        <a href="research.html" class="btn btn--hero-outline">View Research Dashboard</a>
+      <div class="hero__cta fade-up delay-2">
+        <a href="auth.html" class="btn btn--hero btn--lg">Check your score — it's free</a>
+        <a href="research.html" class="btn btn--hero-outline btn--lg">View Bias Research</a>
+      </div>
+      <div class="hero__stats fade-up delay-3">
+        <div>
+          <div class="hero__stat-number" data-count="8">0</div>
+          <div class="hero__stat-label">Point rural penalty<br />(KIPPRA 2021)</div>
+        </div>
+        <div>
+          <div class="hero__stat-number">37%</div>
+          <div class="hero__stat-label">Underfunding penalty<br />for women in African fintech</div>
+        </div>
+        <div>
+          <div class="hero__stat-number">2.4×</div>
+          <div class="hero__stat-label">Urban vs rural<br />approval rate gap</div>
+        </div>
+        <div>
+          <div class="hero__stat-number" data-count="30">0</div>
+          <div class="hero__stat-label">Percentile credit gap<br />from device type alone</div>
+        </div>
       </div>
     </div>
   </div>
@@ -50,25 +80,26 @@
 <!-- How it works -->
 <section class="steps">
   <div class="container">
-    <div class="text-center">
+    <div class="text-center fade-up">
       <p class="section-label">How It Works</p>
       <h2 class="section-title">Three steps to your credit health report</h2>
+      <p class="section-desc" style="margin: 0 auto;">Takes under 3 minutes. No credit impact. No data sold.</p>
     </div>
     <div class="steps__grid">
-      <div class="step card">
+      <div class="step fade-up delay-1">
         <div class="step__number">1</div>
         <h3 class="step__title">Create a free account</h3>
-        <p class="step__desc">Sign up with your email. Your data is secured with Supabase and never shared with lenders.</p>
+        <p class="step__desc">Sign up with your email. Your data is stored securely and never shared with lenders.</p>
       </div>
-      <div class="step card">
+      <div class="step fade-up delay-2">
         <div class="step__number">2</div>
-        <h3 class="step__title">Enter your financial profile</h3>
-        <p class="step__desc">Provide your income, M-Pesa activity, device type, and repayment history in under 3 minutes.</p>
+        <h3 class="step__title">Enter your profile</h3>
+        <p class="step__desc">Income, M-Pesa activity, device type, repayment history. Three quick steps.</p>
       </div>
-      <div class="step card">
+      <div class="step fade-up delay-3">
         <div class="step__number">3</div>
-        <h3 class="step__title">Get your personalized report</h3>
-        <p class="step__desc">See your credit score, approval likelihood, what's helping vs hurting — and what's unfair bias.</p>
+        <h3 class="step__title">Get your report</h3>
+        <p class="step__desc">Your score, approval likelihood across lenders, and every bias penalty identified.</p>
       </div>
     </div>
   </div>
@@ -78,74 +109,76 @@
 <section class="why-matters">
   <div class="container">
     <div class="why-matters__grid">
-      <div>
-        <p class="section-label">Why It Matters</p>
+      <div class="fade-up">
+        <p class="section-label">The Problem</p>
         <h2 class="section-title">The algorithm may be working against you</h2>
-        <p style="color: var(--text-muted); line-height: 1.8; margin-bottom: 1.25rem;">
-          Research from KIPPRA, the Kenya FinAccess Survey 2021/2024, and international
-          studies on African fintech have identified systematic biases in how digital
-          credit algorithms score borrowers.
+        <p style="color: var(--text-3); line-height: 1.8; margin-bottom: 1.25rem;">
+          Digital lenders use mobile data, GPS location, and your phone model as credit proxies.
+          Research shows these signals encode systematic disadvantages that have
+          <strong>nothing to do with your ability to repay</strong>.
         </p>
-        <p style="color: var(--text-muted); line-height: 1.8; margin-bottom: 1.25rem;">
-          A rural borrower may be scored <strong>8 points lower</strong> simply for their
-          location. Women face a documented penalty despite equal repayment behaviour.
-          Your phone model is being used as an income proxy.
+        <p style="color: var(--text-3); line-height: 1.8; margin-bottom: 1.25rem;">
+          A rural borrower is penalised <strong>8 points</strong> simply for where they live.
+          Women face a documented penalty despite equal repayment behaviour.
+          A feature phone costs you <strong>7 points</strong> regardless of your income.
         </p>
-        <p style="color: var(--text-muted); line-height: 1.8;">
-          This tool — built as part of a JKUAT Data Science thesis — surfaces these
-          penalties and shows you what your score <em>should</em> be without them.
-          Powered by guidelines from the CBK and the Kenya National Bureau of Statistics.
+        <p style="color: var(--text-3); line-height: 1.8;">
+          CreditLens surfaces these penalties individually, shows you what your score
+          <em>should</em> fairly be, and cites the research behind each finding.
         </p>
+        <a href="research.html" class="btn btn--outline mt-2" style="margin-top:1.25rem; display:inline-flex;">
+          View bias research →
+        </a>
       </div>
       <div class="why-matters__stats">
-        <div class="why-matters__stat card">
-          <div class="why-matters__stat-number">8 pts</div>
-          <div class="why-matters__stat-label">Average penalty for rural borrowers<br /><em>Source: KIPPRA 2021</em></div>
+        <div class="why-matters__stat fade-up delay-1">
+          <div class="why-matters__stat-number" data-count="8">0</div>
+          <div class="why-matters__stat-label">pts penalty for rural borrowers<br /><em>KIPPRA 2021</em></div>
         </div>
-        <div class="why-matters__stat card">
+        <div class="why-matters__stat fade-up delay-2">
           <div class="why-matters__stat-number">37%</div>
-          <div class="why-matters__stat-label">Underfunding penalty for women in African fintech<br /><em>Source: Asante et al., 2025</em></div>
+          <div class="why-matters__stat-label">Underfunding for women in African fintech<br /><em>Asante et al., 2025</em></div>
         </div>
-        <div class="why-matters__stat card">
-          <div class="why-matters__stat-number">30%ile</div>
-          <div class="why-matters__stat-label">Credit score gap from device type alone<br /><em>Source: Berg et al., 2020</em></div>
+        <div class="why-matters__stat fade-up delay-3">
+          <div class="why-matters__stat-number">30th</div>
+          <div class="why-matters__stat-label">Percentile gap from device type<br /><em>Berg et al., 2020</em></div>
         </div>
-        <div class="why-matters__stat card">
+        <div class="why-matters__stat fade-up delay-4">
           <div class="why-matters__stat-number">2.4×</div>
-          <div class="why-matters__stat-label">Higher approval rate for urban vs rural borrowers<br /><em>Source: FinAccess 2021</em></div>
+          <div class="why-matters__stat-label">Higher approval: urban vs rural<br /><em>FinAccess 2021</em></div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- What you get -->
-<section class="steps" style="background: #f9fafb;">
+<!-- Features -->
+<section class="steps" style="background: var(--bg);">
   <div class="container">
-    <div class="text-center">
-      <p class="section-label">What You'll See</p>
+    <div class="text-center fade-up">
+      <p class="section-label">What You Get</p>
       <h2 class="section-title">Your complete credit health breakdown</h2>
     </div>
-    <div class="steps__grid">
-      <div class="card" style="padding: 1.5rem;">
-        <div style="font-size: 2rem; margin-bottom: 0.75rem;">📈</div>
-        <h3 class="step__title">Your Credit Score (0–100)</h3>
-        <p class="step__desc">Modelled on how Kenyan digital lenders like M-Shwari, Tala, and Branch actually score borrowers.</p>
+    <div class="features-grid">
+      <div class="feature-card fade-up delay-1">
+        <div class="feature-card__icon">📈</div>
+        <h3 class="feature-card__title">Credit Score (0–100)</h3>
+        <p class="feature-card__desc">Modelled on how M-Shwari, Tala, Branch, and KCB M-Pesa actually score applications.</p>
       </div>
-      <div class="card" style="padding: 1.5rem;">
-        <div style="font-size: 2rem; margin-bottom: 0.75rem;">⚠️</div>
-        <h3 class="step__title">Bias Penalties Flagged</h3>
-        <p class="step__desc">We separate legitimate risk factors from bias-flagged penalties, with academic citations for each.</p>
+      <div class="feature-card fade-up delay-2">
+        <div class="feature-card__icon">⚠️</div>
+        <h3 class="feature-card__title">Bias Penalties Flagged</h3>
+        <p class="feature-card__desc">Legitimate risk factors separated from bias-flagged penalties — each with a research citation.</p>
       </div>
-      <div class="card" style="padding: 1.5rem;">
-        <div style="font-size: 2rem; margin-bottom: 0.75rem;">🎯</div>
-        <h3 class="step__title">Score Without Bias</h3>
-        <p class="step__desc">See exactly how many points algorithmic bias is costing you, and what your score should fairly be.</p>
+      <div class="feature-card fade-up delay-3">
+        <div class="feature-card__icon">🎯</div>
+        <h3 class="feature-card__title">Your Fair Score</h3>
+        <p class="feature-card__desc">See exactly how many points bias is costing you and what your score should fairly be.</p>
       </div>
-      <div class="card" style="padding: 1.5rem;">
-        <div style="font-size: 2rem; margin-bottom: 0.75rem;">💡</div>
-        <h3 class="step__title">Personalised Tips</h3>
-        <p class="step__desc">Actionable steps to improve your score — based on your specific weak areas, not generic advice.</p>
+      <div class="feature-card fade-up delay-4">
+        <div class="feature-card__icon">💡</div>
+        <h3 class="feature-card__title">Personalised Tips</h3>
+        <p class="feature-card__desc">Actionable steps tailored to your specific weak areas — not generic advice.</p>
       </div>
     </div>
   </div>
@@ -154,24 +187,74 @@
 <!-- CTA -->
 <section class="landing-cta">
   <div class="container">
-    <h2>Ready to understand your credit score?</h2>
-    <p>Free, private, and backed by peer-reviewed research. No credit impact.</p>
-    <a href="auth.html" class="btn btn--hero btn--lg">Get your free credit health report</a>
+    <h2 class="fade-up">Ready to see your score?</h2>
+    <p class="fade-up delay-1">Free, private, backed by peer-reviewed research. No credit impact.</p>
+    <a href="auth.html" class="btn btn--hero btn--lg fade-up delay-2">Get your free credit health report</a>
   </div>
 </section>
 
 <footer>
   <div class="container">
-    <p>
-      <strong style="color: rgba(255,255,255,0.9);">CreditLens Kenya</strong> —
-      Research by Alexander Wambugu (SCT213-C0002-0002/2022), JKUAT School of Computing and Information Technology.
+    <p style="margin-bottom:0.5rem;">
+      <strong style="color:rgba(255,255,255,0.85);">CreditLens Kenya</strong>
+      &nbsp;·&nbsp; Built by Alexander Wambugu
     </p>
-    <p style="margin-top: 0.5rem;">
-      <a href="research.html">Research Dashboard</a> ·
+    <p style="margin-bottom:1rem;">
+      <a href="research.html">Research</a> &nbsp;·&nbsp;
       <a href="auth.html">Sign In</a>
+    </p>
+    <p style="font-size:0.75rem; opacity:0.4;">
+      Bias research conducted at JKUAT (2022–2025). Sources: KIPPRA · FinAccess · Asante et al. · Berg et al.
     </p>
   </div>
 </footer>
 
+<!-- Mobile bottom nav -->
+<nav class="mobile-bottom-nav">
+  <div class="mobile-bottom-nav__items">
+    <a href="index.html" class="mobile-bottom-nav__item active">
+      <span class="mobile-bottom-nav__icon">🏠</span> Home
+    </a>
+    <a href="research.html" class="mobile-bottom-nav__item">
+      <span class="mobile-bottom-nav__icon">📊</span> Research
+    </a>
+    <a href="auth.html" class="mobile-bottom-nav__item">
+      <span class="mobile-bottom-nav__icon">🔑</span> Sign In
+    </a>
+  </div>
+</nav>
+
+<script>
+// Hamburger menu
+const hamburger = document.getElementById('hamburger')
+const mobileMenu = document.getElementById('mobile-menu')
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open')
+  mobileMenu.classList.toggle('open')
+})
+
+// Scroll animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible') })
+}, { threshold: 0.12 })
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el))
+
+// Animated counters
+function animateCount(el) {
+  const target = parseInt(el.dataset.count)
+  if (!target) return
+  let current = 0
+  const step = Math.ceil(target / 40)
+  const interval = setInterval(() => {
+    current = Math.min(current + step, target)
+    el.textContent = current
+    if (current >= target) clearInterval(interval)
+  }, 30)
+}
+const countObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) animateCount(e.target) })
+}, { threshold: 0.5 })
+document.querySelectorAll('[data-count]').forEach(el => countObserver.observe(el))
+</script>
 </body>
 </html>

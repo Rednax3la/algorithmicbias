@@ -5,20 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Bias Research Dashboard — CreditLens Kenya</title>
   <link rel="stylesheet" href="css/styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
 <!-- Nav -->
-<nav class="nav">
+<nav class="nav" id="main-nav">
   <div class="nav__inner">
-    <a href="index.html" class="nav__logo"><span class="nav__logo-icon">📊</span> CreditLens Kenya</a>
+    <a href="index.html" class="nav__logo"><span class="nav__logo-icon">📊</span> CreditLens</a>
     <div class="nav__links">
       <a href="index.html" class="nav__link">Home</a>
-      <a href="auth.html" class="btn btn--outline btn--sm">Sign In</a>
+      <a href="auth.html" class="btn btn--primary btn--sm">Get My Score</a>
     </div>
+    <button class="nav__hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="nav__mobile-menu" id="mobile-menu">
+    <a href="index.html">Home</a>
+    <a href="auth.html">Sign In</a>
+    <a href="auth.html" class="btn btn--primary" style="border-radius:12px; justify-content:center;">Get My Score Free</a>
   </div>
 </nav>
 
@@ -27,9 +34,9 @@
   <div class="container">
     <h1>Algorithmic Bias Research Dashboard</h1>
     <p>
-      Findings from a JKUAT Data Science research project auditing algorithmic bias in
-      Kenyan digital credit scoring. All data shown is anonymized synthetic data calibrated
-      to published research. Where real user data exists (with consent), it supplements the dataset.
+      Independent research auditing algorithmic bias in Kenyan digital credit scoring.
+      All data shown is anonymized synthetic data calibrated to published research.
+      Where real user data exists (with consent), it supplements the dataset.
     </p>
     <div class="research-meta">
       <div class="research-meta__item"><strong>Dataset:</strong> 10,000 synthetic applications</div>
@@ -195,8 +202,8 @@
 <footer>
   <div class="container">
     <p>
-      Research by <strong style="color:rgba(255,255,255,0.9);">Alexander Wambugu</strong>
-      (SCT213-C0002-0002/2022), JKUAT School of Computing and Information Technology.
+      Built by <strong style="color:rgba(255,255,255,0.9);">Alexander Wambugu</strong>
+      &nbsp;·&nbsp; <a href="index.html" style="color:rgba(255,255,255,0.7);">CreditLens Kenya</a>
     </p>
     <p style="margin-top:0.5rem;">
       Sources: KIPPRA 2021 · FinAccess 2021/2024 · Asante et al. 2025 · Berg et al. 2020 ·
@@ -205,6 +212,29 @@
   </div>
 </footer>
 
+<!-- Mobile bottom nav -->
+<nav class="mobile-bottom-nav">
+  <div class="mobile-bottom-nav__items">
+    <a href="index.html" class="mobile-bottom-nav__item">
+      <span class="mobile-bottom-nav__icon">🏠</span> Home
+    </a>
+    <a href="research.html" class="mobile-bottom-nav__item active">
+      <span class="mobile-bottom-nav__icon">📊</span> Research
+    </a>
+    <a href="auth.html" class="mobile-bottom-nav__item">
+      <span class="mobile-bottom-nav__icon">🔑</span> Sign In
+    </a>
+  </div>
+</nav>
+
+<script>
+const hamburger = document.getElementById('hamburger')
+const mobileMenu = document.getElementById('mobile-menu')
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open')
+  mobileMenu.classList.toggle('open')
+})
+</script>
 <script src="js/supabase.js"></script>
 <script src="js/research.js"></script>
 </body>

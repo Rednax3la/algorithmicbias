@@ -5,19 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Your Financial Profile — CreditLens Kenya</title>
   <link rel="stylesheet" href="css/styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
 <!-- Nav -->
-<nav class="nav">
+<nav class="nav" id="main-nav">
   <div class="nav__inner">
-    <a href="index.html" class="nav__logo"><span class="nav__logo-icon">📊</span> CreditLens Kenya</a>
+    <a href="index.html" class="nav__logo"><span class="nav__logo-icon">📊</span> CreditLens</a>
     <div class="nav__links">
       <span id="nav-user-email" class="text-muted text-small"></span>
       <a href="#" onclick="signOut(); return false;" class="btn btn--ghost btn--sm">Sign Out</a>
     </div>
+    <button class="nav__hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="nav__mobile-menu" id="mobile-menu">
+    <span id="mobile-user-email" class="text-small text-muted"></span>
+    <a href="dashboard.html">My Dashboard</a>
+    <a href="#" onclick="signOut(); return false;">Sign Out</a>
   </div>
 </nav>
 
@@ -284,7 +291,7 @@
               <input type="checkbox" id="data_anonymized_consent" name="data_anonymized_consent" />
               <span>
                 <strong>Research Consent (Optional)</strong><br />
-                I agree to share anonymised, non-identifiable data to support bias research at JKUAT.
+                I agree to share anonymised, non-identifiable data to support ongoing digital credit bias research.
                 No personal information will be shared — only bucketed demographic and score data
                 (e.g. "26-35, Urban, Mid-range phone, Score: 65").
               </span>
@@ -305,6 +312,29 @@
   </div>
 </div>
 
+<!-- Mobile bottom nav -->
+<nav class="mobile-bottom-nav">
+  <div class="mobile-bottom-nav__items">
+    <a href="index.html" class="mobile-bottom-nav__item">
+      <span class="mobile-bottom-nav__icon">🏠</span> Home
+    </a>
+    <a href="profile.html" class="mobile-bottom-nav__item active">
+      <span class="mobile-bottom-nav__icon">📝</span> Profile
+    </a>
+    <a href="dashboard.html" class="mobile-bottom-nav__item">
+      <span class="mobile-bottom-nav__icon">📈</span> Report
+    </a>
+  </div>
+</nav>
+
+<script>
+const hamburger = document.getElementById('hamburger')
+const mobileMenu = document.getElementById('mobile-menu')
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open')
+  mobileMenu.classList.toggle('open')
+})
+</script>
 <script src="js/supabase.js"></script>
 <script src="js/profile.js"></script>
 </body>
