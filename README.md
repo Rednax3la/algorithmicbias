@@ -3,10 +3,10 @@
 ## Project Overview
 **Title:** Auditing Algorithmic Bias in Digital Credit Scoring Using Alternative Financial Data: A Simulation-Based Analysis
 
-**Student:** [Your Name]  
-**Registration Number:** [Your Reg Number]  
+**Student:** Alexander Wambugu 
+**Registration Number:** SCT213-C002-0002/2022  
 **Institution:** JOMO KENYATTA UNIVERSITY OF AGRICULTURE AND TECHNOLOGY  
-**Program:** Bachelor of Science in Data Science
+**Program:** Bachelor of Science in Data Science and Analytics
 
 ---
 
