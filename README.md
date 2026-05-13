@@ -3,7 +3,7 @@
 **Know your credit score. See the bias behind it.**
 
 > **Auditing Algorithmic Bias in Digital Credit Scoring Using Alternative Financial Data: A Simulation-Based Analysis**
-> Alexander Wambugu · SCT213-C0002-0002/2022 · BSc Data Science & Analytics
+> Alexander Wambugu · SCT213-C002-0002/2022 · BSc Data Science & Analytics
 > Jomo Kenyatta University of Agriculture and Technology (JKUAT) · 2022–2026
 
 CreditLens is the research deliverable and public-facing tool for this JKUAT Data Science thesis. Enter your financial profile and get a personalised credit score estimate, approval likelihood across major digital lenders, and a clear breakdown of which penalties are legitimate risk factors — and which are algorithmic bias.
